@@ -37,4 +37,4 @@ docker-compose up -d
 The -d option specifies that the containers should be run in the background (Detached mode).
 
 
-##Hint : Please Notice to update migration to new connection string and update-database
+## Hint : Please Notice to update migration to new connection string and update-database
