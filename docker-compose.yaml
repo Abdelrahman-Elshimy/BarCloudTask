@@ -1,0 +1,13 @@
+﻿version: "3.9"
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 8080:80
+        environment:
+            - ConnectionStrings__DefaultConnection=Server=ABDELRAHMAN-LOT\\SQLEXPRESS;Database=BarcloudDB;Integrated Security=true;
+            - Jwt__Key = DhftOS5uphK3vmCJQrexST1RsyjZBjXWRgJMFPU4;
+            - Jwt__Issuer = http://localhost:45369/;
+            - Jwt__ = http://localhost:45369/;

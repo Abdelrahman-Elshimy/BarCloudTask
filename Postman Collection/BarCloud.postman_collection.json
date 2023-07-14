@@ -1,0 +1,824 @@
+{
+	"info": {
+		"_postman_id": "61140add-1639-4990-897b-130a34ea59c1",
+		"name": "BarCloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4683625",
+		"_collection_link": "https://grey-sunset-275220.postman.co/workspace/Salon~42df8fe5-db30-44d3-92f0-11934477dc07/collection/4683625-61140add-1639-4990-897b-130a34ea59c1?action=share&creator=4683625&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login By username and password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get the reponse\r",
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// Schema of response object\r",
+									"pm.test(\"Schema of response\", () => {\r",
+									"    pm.expect(jsonData).to.have.all.keys(\"token\");\r",
+									"});\r",
+									"\r",
+									"// data types of response\r",
+									"pm.test(\"test data of the response\", () => {\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData.token).to.be.a(\"string\");\r",
+									"});\r",
+									"\r",
+									"var requestJsonBody = JSON.parse(pm.request.body.raw);\r",
+									"pm.test(\"Test body schema\", () => {\r",
+									"  pm.expect(requestJsonBody).to.have.all.keys(\"username\", \"password\");\r",
+									"});\r",
+									"pm.test(\"Test body sent\", () => {\r",
+									"    pm.expect(requestJsonBody).to.be.an(\"object\");\r",
+									"    pm.expect(requestJsonBody.username).to.be.a(\"string\");\r",
+									"    pm.expect(requestJsonBody.password).to.be.a(\"string\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"jason_admin\",\r\n  \"password\": \"MyPass_w0rd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Login",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Login"
+							]
+						},
+						"description": "return token\n\nHint: Mock users data"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Person",
+			"item": [
+				{
+					"name": "Create Person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var requestJsonBody = JSON.parse(pm.request.body.raw);\r",
+									"pm.test(\"Test body schema\", () => {\r",
+									"  pm.expect(requestJsonBody).to.have.all.keys(\"firstName\", \"lastName\");\r",
+									"});\r",
+									"pm.test(\"Test body sent\", () => {\r",
+									"    pm.expect(requestJsonBody).to.be.an(\"object\");\r",
+									"    pm.expect(requestJsonBody.firstName).to.be.a(\"string\");\r",
+									"    pm.expect(requestJsonBody.lastName).to.be.a(\"string\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwNzYyMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.1rrDT99rDrv6dLnu9NIUsGIK_BE-QCU24w2_8aZXpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Persons",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Persons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Person By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get the reponse\r",
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// Schema of response object\r",
+									"pm.test(\"Schema of response\", () => {\r",
+									"    pm.expect(jsonData).to.have.all.keys(\"id\", \"fullName\", \"addresses\");\r",
+									"});\r",
+									"\r",
+									"// data types of response\r",
+									"pm.test(\"test data of the response\", () => {\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData.id).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.fullName).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.addresses).to.be.a(\"array\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwNzYyMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.1rrDT99rDrv6dLnu9NIUsGIK_BE-QCU24w2_8aZXpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Persons?id=1",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Persons"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Persons",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get the reponse\r",
+									"const jsonData = pm.response.json();\r",
+									"// data types of response\r",
+									"pm.test(\"test data of the response\", () => {\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwNzYyMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.1rrDT99rDrv6dLnu9NIUsGIK_BE-QCU24w2_8aZXpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Persons/GetAll",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Persons",
+								"GetAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var requestJsonBody = JSON.parse(pm.request.body.raw);\r",
+									"pm.test(\"Test body schema\", () => {\r",
+									"  pm.expect(requestJsonBody).to.have.all.keys(\"id\",\"firstName\", \"lastName\");\r",
+									"});\r",
+									"pm.test(\"Test body sent\", () => {\r",
+									"    pm.expect(requestJsonBody).to.be.an(\"object\");\r",
+									"    pm.expect(requestJsonBody.id).to.be.a(\"number\");\r",
+									"    pm.expect(requestJsonBody.firstName).to.be.a(\"string\");\r",
+									"    pm.expect(requestJsonBody.lastName).to.be.a(\"string\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwNzYyMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.1rrDT99rDrv6dLnu9NIUsGIK_BE-QCU24w2_8aZXpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"firstName\": \"Mohmammed\",\r\n  \"lastName\": \"Adasdfasdsad\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Persons",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Persons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Persons",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// get the reponse\r",
+									"const jsonData = pm.response.json();\r",
+									"// data types of response\r",
+									"pm.test(\"test data of the response\", () => {\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"\r",
+									"});\r",
+									"var requestJsonBody = JSON.parse(pm.request.body.raw);\r",
+									"pm.test(\"Test body schema\", () => {\r",
+									"  pm.expect(requestJsonBody).to.have.all.keys(\"firstName\", \"lastName\");\r",
+									"});\r",
+									"pm.test(\"Test body sent\", () => {\r",
+									"    pm.expect(requestJsonBody).to.be.an(\"object\");\r",
+									"    pm.expect(requestJsonBody.firstName).to.be.a(\"string\");\r",
+									"    pm.expect(requestJsonBody.lastName).to.be.a(\"string\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwNzYyMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.1rrDT99rDrv6dLnu9NIUsGIK_BE-QCU24w2_8aZXpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"string\",\r\n  \"lastName\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Persons/FilterPerson",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Persons",
+								"FilterPerson"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwNzYyMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.1rrDT99rDrv6dLnu9NIUsGIK_BE-QCU24w2_8aZXpcQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Persons?id=1",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Persons"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Person Crud Operation"
+		},
+		{
+			"name": "Address",
+			"item": [
+				{
+					"name": "Create Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var requestJsonBody = JSON.parse(pm.request.body.raw);\r",
+									"pm.test(\"Test body schema\", () => {\r",
+									"  pm.expect(requestJsonBody).to.have.all.keys(\"street\", \"city\", \"personId\");\r",
+									"});\r",
+									"pm.test(\"Test body sent\", () => {\r",
+									"    pm.expect(requestJsonBody).to.be.an(\"object\");\r",
+									"    pm.expect(requestJsonBody.street).to.be.a(\"string\");\r",
+									"    pm.expect(requestJsonBody.city).to.be.a(\"string\");\r",
+									"    pm.expect(requestJsonBody.personId).to.be.a(\"number\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwODg5NiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.yENJCbl48qknDYOOuNn5_lHs-M3zIH903EUd6Et5vEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"street\": \"string\",\r\n  \"city\": \"string\",\r\n  \"personId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Addresses",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Address By Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get the reponse\r",
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"// Schema of response object\r",
+									"pm.test(\"Schema of response\", () => {\r",
+									"    pm.expect(jsonData).to.have.all.keys(\"id\", \"street\", \"city\", \"personId\", \"person\");\r",
+									"});\r",
+									"\r",
+									"// data types of response\r",
+									"pm.test(\"test data of the response\", () => {\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"    pm.expect(jsonData.id).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.street).to.be.a(\"string\");\r",
+									"    pm.expect(jsonData.city).to.be.a(\"string\");\r",
+									"        pm.expect(jsonData.personId).to.be.a(\"number\");\r",
+									"    pm.expect(jsonData.person).to.be.a(\"object\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwODg5NiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.yENJCbl48qknDYOOuNn5_lHs-M3zIH903EUd6Et5vEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Addresses?id=1",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Addresses"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Addresses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// get the reponse\r",
+									"const jsonData = pm.response.json();\r",
+									"// data types of response\r",
+									"pm.test(\"test data of the response\", () => {\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwODg5NiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.yENJCbl48qknDYOOuNn5_lHs-M3zIH903EUd6Et5vEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Addresses/GetAll",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Addresses",
+								"GetAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var requestJsonBody = JSON.parse(pm.request.body.raw);\r",
+									"pm.test(\"Test body schema\", () => {\r",
+									"  pm.expect(requestJsonBody).to.have.all.keys(\"id\",\"street\", \"city\", \"personId\");\r",
+									"});\r",
+									"pm.test(\"Test body sent\", () => {\r",
+									"    pm.expect(requestJsonBody).to.be.an(\"object\");\r",
+									"    pm.expect(requestJsonBody.id).to.be.a(\"number\");\r",
+									"    pm.expect(requestJsonBody.street).to.be.a(\"string\");\r",
+									"    pm.expect(requestJsonBody.city).to.be.a(\"string\");\r",
+									"    pm.expect(requestJsonBody.personId).to.be.a(\"number\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwODg5NiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.yENJCbl48qknDYOOuNn5_lHs-M3zIH903EUd6Et5vEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 4,\r\n  \"street\": \"string\",\r\n  \"city\": \"string\",\r\n  \"personId\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Addresses",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Addresses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"// get the reponse\r",
+									"const jsonData = pm.response.json();\r",
+									"// data types of response\r",
+									"pm.test(\"test data of the response\", () => {\r",
+									"    pm.expect(jsonData).to.be.an(\"array\");\r",
+									"\r",
+									"});\r",
+									"var requestJsonBody = JSON.parse(pm.request.body.raw);\r",
+									"pm.test(\"Test body schema\", () => {\r",
+									"  pm.expect(requestJsonBody).to.have.all.keys(\"street\", \"city\");\r",
+									"});\r",
+									"pm.test(\"Test body sent\", () => {\r",
+									"    pm.expect(requestJsonBody).to.be.an(\"object\");\r",
+									"    pm.expect(requestJsonBody.street).to.be.a(\"string\");\r",
+									"    pm.expect(requestJsonBody.city).to.be.a(\"string\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMwODg5NiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.yENJCbl48qknDYOOuNn5_lHs-M3zIH903EUd6Et5vEY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"street\": \"string\",\r\n  \"city\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Addresses/FilterPerson",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Addresses",
+								"FilterPerson"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// check if status code 200\r",
+									"pm.test(\"Status Code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Imphc29uX2FkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiamFzb24uYWRtaW5AZW1haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiSmFzb24iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zdXJuYW1lIjoiQnJ5YW50IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW5pc3RyYXRvciIsImV4cCI6MTY4OTMxMDgwMiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo0NTM2OS8iLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQ1MzY5LyJ9.gL8kf5oOPIyJVCYTb1ex2fGkPxzHGbE3uanQR2ZYBSU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BarCloud_API_URLS}}/Addresses?id=1",
+							"host": [
+								"{{BarCloud_API_URLS}}"
+							],
+							"path": [
+								"Addresses"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "BarCloud_API_URL",
+			"value": "https://localhost:44395/api"
+		}
+	]
+}
